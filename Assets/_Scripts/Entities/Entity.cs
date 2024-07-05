@@ -6,14 +6,34 @@ namespace Entities
 {
     public abstract class Entity : MonoBehaviour
     {
-        // 상호작용 가능한 모든 물체의 기본 클래스
-        [Header("Customizable")]
+        // 이동 가능한 모든 물체의 기본 클래스
+        [Header("Customizable")] 
+        public float initialHealth = 10;
+        public float initialDef;
         public float initialVelocity;
         public float initialJumpPower;
         
         protected EntityMove _entityMove;
-        // 추후 다른 이동 기능도 추가 예정
+        protected EntityStatus _entityStatus;
 
-        protected void CreateEntityMove() => _entityMove = new EntityMove(initialVelocity,initialJumpPower,this.GetOrAddComponent<Rigidbody>());
+        protected void Hit(GameObject obj)
+        {
+            switch (obj.tag)
+            {
+                case "Enemy":
+                    OnHitEnemy(obj);
+                    break;
+                case "Player":
+                    OnHitPlayer(obj);
+                    break;
+                case "Object":
+                    OnHitObject(obj);
+                    break;
+            }
+        }
+
+        protected abstract void OnHitEnemy(GameObject obj);
+        protected abstract void OnHitPlayer(GameObject obj);
+        protected abstract void OnHitObject(GameObject obj);
     }
 }

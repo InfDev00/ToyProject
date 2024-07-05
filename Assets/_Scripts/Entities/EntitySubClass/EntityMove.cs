@@ -18,10 +18,22 @@ namespace Entities.EntitySubClass
 
         public void Move(Vector2 force2d)
         {
-            var force3d = new Vector3(force2d.x, 0, force2d.y);
-            _rigidBody.AddForce(force3d * _velocity * Time.fixedDeltaTime);
+            if (force2d == Vector2.zero)
+            {
+                _rigidBody.velocity = new Vector3(0, _rigidBody.velocity.y, 0);
+                return;
+            }
+
+            const float angle = -45f * Mathf.Deg2Rad;
+            var cos = Mathf.Cos(angle);
+            var sin = Mathf.Sin(angle);
+            
+            var force3d = new Vector3(force2d.x * cos - force2d.y * sin, 0, force2d.x * sin + force2d.y * cos);
+            var velocity = force3d.normalized * _velocity;
+            
+            _rigidBody.velocity = new Vector3(velocity.x, _rigidBody.velocity.y, velocity.z);
         }
 
-        public void Jump() => _rigidBody.AddForce(new Vector3(0, _jumpPower, 0));
+        public void Jump() => _rigidBody.velocity = new Vector3(_rigidBody.velocity.x, _jumpPower, _rigidBody.velocity.z);
     }
 }

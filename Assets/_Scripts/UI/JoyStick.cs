@@ -8,7 +8,6 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
     {
         public RectTransform background;
         public RectTransform handle;
-        public Color joyStickColor;
         public Vector2 InputVector { get; private set; }
 
         private Image _backgroundImage;
@@ -18,9 +17,6 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
         {
             _backgroundImage = background.GetComponent<Image>();
             _handleImage = handle.GetComponent<Image>();
-            
-            _backgroundImage.color = Color.clear;
-            _handleImage.color = Color.clear;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -39,8 +35,6 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
         
         public void OnPointerDown(PointerEventData eventData)
         {
-            _backgroundImage.color = joyStickColor;
-            _handleImage.color = joyStickColor;
 
             RectTransformUtility.ScreenPointToWorldPointInRectangle(background, eventData.position, eventData.pressEventCamera, out var worldPoint);
             background.position = worldPoint;
@@ -52,9 +46,6 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
         {
             InputVector = Vector2.zero;
             handle.anchoredPosition = Vector2.zero;
-            
-            _backgroundImage.color = Color.clear;
-            _handleImage.color = Color.clear;
         }
     }
 
