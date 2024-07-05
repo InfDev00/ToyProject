@@ -34,6 +34,6 @@ namespace Entities.EntitySubClass
             _rigidBody.velocity = new Vector3(velocity.x, _rigidBody.velocity.y, velocity.z);
         }
 
-        public void Jump() => _rigidBody.velocity = new Vector3(_rigidBody.velocity.x, _jumpPower, _rigidBody.velocity.z);
+        public void Jump() => _rigidBody.AddForce(0, _jumpPower * 10, 0);
     }
 }

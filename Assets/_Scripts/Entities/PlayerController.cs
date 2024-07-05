@@ -20,6 +20,9 @@ namespace Entities
             _entityMove.Move(joyStick.InputVector);
         }
 
+        public void Jump() => _entityMove.Jump();
+
+
         protected override void OnHitEnemy(GameObject obj)
         {
             Debug.Log("Collision to Enemy");
