@@ -1,6 +1,7 @@
 using System;
 using Entities.EntitySubClass;
 using UnityEngine;
+using Utils;
 
 namespace Entities
 {
@@ -20,13 +21,13 @@ namespace Entities
         {
             switch (obj.tag)
             {
-                case "Enemy":
+                case Tags.ENEMY:
                     OnHitEnemy(obj);
                     break;
-                case "Player":
+                case Tags.PLAYER:
                     OnHitPlayer(obj);
                     break;
-                case "Object":
+                case Tags.OBJECT:
                     OnHitObject(obj);
                     break;
             }

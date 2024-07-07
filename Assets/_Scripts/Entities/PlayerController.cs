@@ -9,6 +9,8 @@ namespace Entities
     {
         [Header("Input")]
         public JoyStick joyStick;
+        readonly float cos = Mathf.Cos(-45f * Mathf.Deg2Rad);
+        readonly float sin = Mathf.Sin(-45f * Mathf.Deg2Rad);
         private void Awake()
         {
             _entityMove = new EntityMove(initialVelocity, initialJumpPower, GetComponent<Rigidbody>());
@@ -17,7 +19,9 @@ namespace Entities
 
         private void FixedUpdate()
         {
-            _entityMove.Move(joyStick.InputVector);
+            var force2d = joyStick.InputVector;
+            force2d = new Vector2(force2d.x * cos - force2d.y * sin, force2d.x * sin + force2d.y * cos);
+            _entityMove.Move(force2d);
         }
 
         public void Jump() => _entityMove.Jump();
