@@ -14,11 +14,12 @@ namespace Entities
         public float initialVelocity;
         public float initialJumpPower;
         
-        protected EntityMove _entityMove;
-        protected EntityStatus _entityStatus;
+        public EntityMove EntityMove;
+        public EntityStatus EntityStatus;
 
         protected void Hit(GameObject obj)
         {
+            //때린 쪽에서 충돌 판정 실행.
             switch (obj.tag)
             {
                 case Tags.ENEMY:
@@ -36,5 +37,7 @@ namespace Entities
         protected abstract void OnHitEnemy(GameObject obj);
         protected abstract void OnHitPlayer(GameObject obj);
         protected abstract void OnHitObject(GameObject obj);
+        
+        protected void OnCollisionEnter(Collision other) => Hit(other.gameObject);
     }
 }

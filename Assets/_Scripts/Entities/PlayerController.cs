@@ -2,6 +2,7 @@ using System;
 using Entities.EntitySubClass;
 using UI;
 using UnityEngine;
+using Utils;
 
 namespace Entities
 {
@@ -13,18 +14,19 @@ namespace Entities
         readonly float sin = Mathf.Sin(-45f * Mathf.Deg2Rad);
         private void Awake()
         {
-            _entityMove = new EntityMove(initialVelocity, initialJumpPower, GetComponent<Rigidbody>());
-            _entityStatus = new EntityStatus(initialHealth, initialDef);
+            EntityMove = new EntityMove(initialVelocity, initialJumpPower, GetComponent<Rigidbody>());
+            EntityStatus = new EntityStatus(initialHealth, initialDef);
+            gameObject.tag = Tags.PLAYER;
         }
 
         private void FixedUpdate()
         {
             var force2d = joyStick.InputVector;
             force2d = new Vector2(force2d.x * cos - force2d.y * sin, force2d.x * sin + force2d.y * cos);
-            _entityMove.Move(force2d);
+            EntityMove.Move(force2d);
         }
 
-        public void Jump() => _entityMove.Jump();
+        public void Jump() => EntityMove.Jump();
 
 
         protected override void OnHitEnemy(GameObject obj)
@@ -40,12 +42,9 @@ namespace Entities
         protected override void OnHitObject(GameObject obj)
         {
             Debug.Log("Collision to obj");
+            var interact =  obj.GetComponent<InteractObject>();
+            
+            interact.Interact(gameObject);
         }
-        private void OnCollisionEnter(Collision other)
-        {
-            Hit(other.gameObject);
-        }
-
-
     }
 }

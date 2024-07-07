@@ -1025,6 +1025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1366018017}
   - component: {fileID: 1366018016}
+  - component: {fileID: 1366018019}
   - component: {fileID: 1366018015}
   - component: {fileID: 1366018014}
   - component: {fileID: 1366018018}
@@ -1148,6 +1149,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 14
   m_CollisionDetection: 0
+--- !u!114 &1366018019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366018013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205ed3b62b7643e8b5e3cb42ff799148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialHealth: 10
+  initialDef: 0
+  initialVelocity: 0
+  initialJumpPower: 0
+  healAmount: 5
 --- !u!1 &1588577497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,10 +1176,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1588577503}
   - component: {fileID: 1588577502}
+  - component: {fileID: 1588577498}
   - component: {fileID: 1588577501}
   - component: {fileID: 1588577500}
   - component: {fileID: 1588577499}
-  - component: {fileID: 1588577498}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged

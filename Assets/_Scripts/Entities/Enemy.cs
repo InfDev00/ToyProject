@@ -1,6 +1,7 @@
 using System;
 using Entities.EntitySubClass;
 using UnityEngine;
+using Utils;
 
 namespace Entities
 {
@@ -10,8 +11,9 @@ namespace Entities
         
         private void Awake()
         {
-            _entityMove = new EntityMove(initialVelocity, initialJumpPower, GetComponent<Rigidbody>());
-            _entityStatus = new EntityStatus(initialHealth, initialDef);
+            EntityMove = new EntityMove(initialVelocity, initialJumpPower, GetComponent<Rigidbody>());
+            EntityStatus = new EntityStatus(initialHealth, initialDef);
+            gameObject.tag = Tags.ENEMY;
         }
 
         private void FixedUpdate()
@@ -20,23 +22,23 @@ namespace Entities
             {
                 var direction = (followTarget.transform.position - transform.position).normalized;
                 var direction2D = new Vector2(direction.x, direction.z);
-                _entityMove.Move(direction2D);
+                EntityMove.Move(direction2D);
             }
         }
 
         protected override void OnHitEnemy(GameObject obj)
         {
-            throw new System.NotImplementedException();
+
         }
 
         protected override void OnHitPlayer(GameObject obj)
         {
-            throw new System.NotImplementedException();
+
         }
 
         protected override void OnHitObject(GameObject obj)
         {
-            throw new System.NotImplementedException();
+
         }
     }
 }
