@@ -8,10 +8,7 @@ namespace Entities
 {
     public class PlayerController : Entity
     {
-        [Header("Input")]
-        public JoyStick joyStick;
-        readonly float cos = Mathf.Cos(-45f * Mathf.Deg2Rad);
-        readonly float sin = Mathf.Sin(-45f * Mathf.Deg2Rad);
+        private bool _isJump;
         private void Awake()
         {
             EntityMove = new EntityMove(initialVelocity, initialJumpPower, GetComponent<Rigidbody>());
@@ -19,14 +16,12 @@ namespace Entities
             gameObject.tag = Tags.PLAYER;
         }
 
-        private void FixedUpdate()
+        public void Jump()
         {
-            var force2d = joyStick.InputVector;
-            force2d = new Vector2(force2d.x * cos - force2d.y * sin, force2d.x * sin + force2d.y * cos);
-            EntityMove.Move(force2d);
+            if (!_isJump) return;
+            EntityMove.Jump();
+            _isJump = false;
         }
-
-        public void Jump() => EntityMove.Jump();
 
 
         protected override void OnHitEnemy(GameObject obj)
@@ -45,6 +40,11 @@ namespace Entities
             var interact =  obj.GetComponent<InteractObject>();
             
             interact.Interact(gameObject);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.name == "Terrain" || other.CompareTag(Tags.ENEMY)) _isJump = true;
         }
     }
 }
