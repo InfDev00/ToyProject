@@ -4,7 +4,7 @@ namespace Entities.EntitySubClass
 {
     public class EntityStatus
     {
-        private float _maxHp;
+        private readonly float _maxHp;
         private float _hp;
         private readonly float _def;
 

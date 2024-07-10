@@ -5,7 +5,7 @@ using Utils;
 
 namespace Entities
 {
-    public class Enemy : Entity
+    public class Enemy : Entity, IDamageable
     {
         public GameObject followTarget;
         
@@ -26,19 +26,10 @@ namespace Entities
             }
         }
 
-        protected override void OnHitEnemy(GameObject obj)
+        public void Damaged(float damage)
         {
-
-        }
-
-        protected override void OnHitPlayer(GameObject obj)
-        {
-
-        }
-
-        protected override void OnHitObject(GameObject obj)
-        {
-
+            Debug.Log("Enemy Damaged");
+            if(! EntityStatus.GetDamage(damage)) Destroy(gameObject); //test
         }
     }
 }

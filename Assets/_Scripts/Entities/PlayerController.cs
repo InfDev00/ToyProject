@@ -6,7 +6,7 @@ using Utils;
 
 namespace Entities
 {
-    public class PlayerController : Entity
+    public class PlayerController : Entity, IEnemyHitHandler, IInteractObjectHitHandler
     {
         private bool _isJump;
         private void Awake()
@@ -23,22 +23,14 @@ namespace Entities
             _isJump = false;
         }
 
-
-        protected override void OnHitEnemy(GameObject obj)
+        public void OnHitEnemy(Enemy enemy)
         {
             Debug.Log("Collision to Enemy");
         }
 
-        protected override void OnHitPlayer(GameObject obj)
+        public void OnHitInteractObject(InteractObject interact)
         {
-            throw new NotImplementedException();
-        }
-
-        protected override void OnHitObject(GameObject obj)
-        {
-            Debug.Log("Collision to obj");
-            var interact =  obj.GetComponent<InteractObject>();
-            
+            Debug.Log("Collision to interact");
             interact.Interact(gameObject);
         }
 

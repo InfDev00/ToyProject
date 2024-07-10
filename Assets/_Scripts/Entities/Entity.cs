@@ -1,4 +1,3 @@
-using System;
 using Entities.EntitySubClass;
 using UnityEngine;
 using Utils;
@@ -16,28 +15,26 @@ namespace Entities
         
         public EntityMove EntityMove;
         public EntityStatus EntityStatus;
-
-        protected void Hit(GameObject obj)
+        
+        protected virtual void OnCollisionEnter(Collision collision)
         {
-            //때린 쪽에서 충돌 판정 실행.
-            switch (obj.tag)
+            // 각 Entity는 타인과 충돌 시 발생하는 코드 포함
+            var comp = collision.gameObject.GetComponent<Entity>();
+            switch (collision.gameObject.tag)
             {
-                case Tags.ENEMY:
-                    OnHitEnemy(obj);
-                    break;
                 case Tags.PLAYER:
-                    OnHitPlayer(obj);
+                    if (this is IPlayerHitHandler playerHitHandler)
+                        playerHitHandler.OnHitPlayer(comp as PlayerController);
+                    break;
+                case Tags.ENEMY:
+                    if (this is IEnemyHitHandler enemyHitHandler)
+                        enemyHitHandler.OnHitEnemy(comp as Enemy);
                     break;
                 case Tags.OBJECT:
-                    OnHitObject(obj);
+                    if(this is IInteractObjectHitHandler interactObjectHitHandler)
+                        interactObjectHitHandler.OnHitInteractObject(comp as InteractObject);
                     break;
             }
         }
-
-        protected abstract void OnHitEnemy(GameObject obj);
-        protected abstract void OnHitPlayer(GameObject obj);
-        protected abstract void OnHitObject(GameObject obj);
-        
-        protected void OnCollisionEnter(Collision other) => Hit(other.gameObject);
     }
 }
