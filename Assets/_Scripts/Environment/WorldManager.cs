@@ -4,8 +4,27 @@ using UnityEngine;
 
 public class WorldManager : MonoBehaviour
 {
-    //Stage의 월드(큐브나 각종 환경들)를 관장하는 놈(스테이지 시간이 월드에 미치는 영향들을 표현하는 메서드들이 담겨있어야함 그것들을 이벤트에 구독시킨다)
+    // Controls World (Cubes and other environments)
+    // Contains methods that affects World envrionments by duration of time - subscribe to events in StageManager
 
+    [SerializeField] SphereCollider worldCollider;
+    [SerializeField] float worldSize;
+
+    private void Awake()
+    {
+        worldCollider.radius = worldSize;
+    }
+
+    public void SetWorld()
+    {
+        worldCollider.radius = worldSize;
+    }
+
+    // must add parameter in order to adjust shrinking amount
+    public void ShrinkWorld()
+    {
+        worldCollider.GetComponent<SphereCollider>().radius -= 5;
+    }
     // Start is called before the first frame update
     void Start()
     {

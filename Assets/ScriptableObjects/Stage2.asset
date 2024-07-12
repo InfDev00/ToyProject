@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Stage2
   m_EditorClassIdentifier: 
   _totalStageTime: 30
-  _intervalTime: 10
+  _intervalTime: 6
