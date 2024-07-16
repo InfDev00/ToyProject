@@ -5,10 +5,8 @@ using Utils;
 
 namespace Entities
 {
-    public class InteractObject : Entity
+    public abstract class InteractObject : Entity
     {
-        
-        
         private void Awake()
         {
             EntityStatus = new EntityStatus(initialHealth, initialDef);
@@ -19,21 +17,6 @@ namespace Entities
         {
             Debug.Log($"Interact End with {log}");
             Destroy(gameObject);
-        }
-
-        protected override void OnHitEnemy(GameObject obj)
-        {
-
-        }
-
-        protected override void OnHitPlayer(GameObject obj)
-        {
-
-        }
-
-        protected override void OnHitObject(GameObject obj)
-        {
-
         }
     }
 }
