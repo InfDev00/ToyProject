@@ -1,6 +1,4 @@
-using System;
 using Entities.EntitySubClass;
-using UI;
 using UnityEngine;
 using Utils;
 
@@ -36,7 +34,7 @@ namespace Entities
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.name == "Terrain" || other.CompareTag(Tags.ENEMY)) _isJump = true;
+            if (other.CompareTag(Tags.GROUND) || other.CompareTag(Tags.ENEMY)) _isJump = true;
         }
     }
 }

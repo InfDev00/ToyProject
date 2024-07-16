@@ -10,6 +10,7 @@ namespace UI
         [Header("Controller")] 
         public Button jumpButton;
         public JoyStick joyStick;
+        public Drag drag;
         
         [Header("UpperUI")] 
         public Button pauseButton;
