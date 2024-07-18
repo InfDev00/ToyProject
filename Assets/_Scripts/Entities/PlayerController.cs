@@ -9,7 +9,7 @@ namespace Entities
         private bool _isJump;
         private void Awake()
         {
-            EntityMove = new EntityMove(initialVelocity, initialJumpPower, GetComponent<Rigidbody>());
+            EntityMove = CreateEntityMove();
             EntityStatus = new EntityStatus(initialHealth, initialDef);
             gameObject.tag = Tags.PLAYER;
         }

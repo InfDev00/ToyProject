@@ -15,8 +15,8 @@ namespace Entities
         public WeaponType weaponType;
         public GameObject weaponObject;
         public Animator anim;
-
-        private void Awake()
+        
+        protected virtual void Awake()
         {
             weaponObject.SetActive(false);
             _attackDuration = attackCoolTime - 0.5f;

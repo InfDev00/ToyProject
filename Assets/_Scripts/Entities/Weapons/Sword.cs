@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Managers;
 using UnityEngine;
 using Utils;
 
@@ -6,9 +8,14 @@ namespace Entities.Weapons
 {
     public class Sword : Weapon, IEnemyHitHandler
     {
+        private WeaponManager _manager;
+
+        private void Start() => _manager = GetComponentInParent<WeaponManager>();
+
         protected override void Use()
         {
-            StopCoroutine(Swing());
+            _manager.AttackDirection();
+            
             StartCoroutine(Swing());
         }
 

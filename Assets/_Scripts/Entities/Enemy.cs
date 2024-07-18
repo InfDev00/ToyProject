@@ -11,7 +11,7 @@ namespace Entities
         
         private void Awake()
         {
-            EntityMove = new EntityMove(initialVelocity, initialJumpPower, GetComponent<Rigidbody>());
+            EntityMove = CreateEntityMove();
             EntityStatus = new EntityStatus(initialHealth, initialDef);
             gameObject.tag = Tags.ENEMY;
         }
