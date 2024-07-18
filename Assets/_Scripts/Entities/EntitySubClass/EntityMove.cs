@@ -27,6 +27,14 @@ namespace Entities.EntitySubClass
         {
             Move(new Vector2(force2d.x * cos - force2d.y * sin, force2d.x * sin + force2d.y * cos));
         }
+
+        public void Move(Vector3 force3d)
+        {
+            var velocity = force3d.normalized * _velocity;
+            
+            _rigidBody.velocity = new Vector3(velocity.x, _rigidBody.velocity.y, velocity.z);
+            if(!LockRotation)Rotation(force3d);
+        }
         
         public void Move(Vector2 force2d)
         {
@@ -37,10 +45,7 @@ namespace Entities.EntitySubClass
             }
 
             var force3d = new Vector3(force2d.x, 0, force2d.y);
-            var velocity = force3d.normalized * _velocity;
-            
-            _rigidBody.velocity = new Vector3(velocity.x, _rigidBody.velocity.y, velocity.z);
-            if(!LockRotation)Rotation(force3d);
+            Move(force3d);
         }
 
         public void Jump() => _rigidBody.AddForce(0, _jumpPower * 10, 0);
