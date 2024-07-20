@@ -11,6 +11,7 @@ namespace Entities
         
         private void Awake()
         {
+            //followTarget = GameObject.FindWithTag("Player");
             EntityMove = new EntityMove(initialVelocity, initialJumpPower, GetComponent<Rigidbody>());
             EntityStatus = new EntityStatus(initialHealth, initialDef);
             gameObject.tag = Tags.ENEMY;
@@ -30,6 +31,11 @@ namespace Entities
         {
             Debug.Log("Enemy Damaged");
             if(! EntityStatus.GetDamage(damage)) Destroy(gameObject); //test
+        }
+
+        private void OnDestroy()
+        {
+            EnemyManager.OnEnemyKilled?.Invoke(this);
         }
     }
 }

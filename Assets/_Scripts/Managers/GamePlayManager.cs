@@ -14,11 +14,25 @@ namespace Managers
         public PlayerController player;
         public GamePlayUI ui;
 
-        
+        public StageManager stageManager;
+
+        public EnemyManager enemyManager;
+
+        public void SetGamePlayTime(Stage stageInfo)
+        {
+            gamePlayTime = stageInfo.TotalStageTime;
+        }
+
+        private void Awake()
+        {
+            StageManager.OnStageChanged += SetGamePlayTime;
+        }
+
         private void Start()
         {
             ui.UpdateTimerDisplay(gamePlayTime);
             ui.jumpButton.onClick.AddListener(player.Jump);
+            StageManager.OnStageChanged?.Invoke(stageManager.currentStage);
         }
 
         private void FixedUpdate()
@@ -27,6 +41,14 @@ namespace Managers
             gamePlayTime -= Time.fixedDeltaTime;
             
             ui.UpdateTimerDisplay(gamePlayTime);
+            ui.UpdateStageDisplay(stageManager.currentStage, enemyManager.UpdateEnemyCount());
+
+            stageManager.UpdateStage(stageManager.currentStage.type, gamePlayTime, enemyManager.UpdateEnemyCount());
+        }
+
+        private void OnDestroy()
+        {
+            StageManager.OnStageChanged -= SetGamePlayTime;
         }
     }
 }

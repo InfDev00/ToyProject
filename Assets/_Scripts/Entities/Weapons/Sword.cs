@@ -15,10 +15,10 @@ namespace Entities.Weapons
         private IEnumerator Swing()
         {
             weaponObject.SetActive(true);
-            anim.SetFloat(Values.ANIM_ATTACK_SPEED, 1/attackSpeed);
-            anim.SetTrigger(Values.ANIM_ATTACK);
+            //anim.SetFloat(Values.ANIM_ATTACK_SPEED, 1/attackSpeed);
+            //anim.SetTrigger(Values.ANIM_ATTACK);
             yield return new WaitForSeconds(attackSpeed);
-            weaponObject.SetActive(false);
+            //weaponObject.SetActive(false);
         }
 
         public void OnHitEnemy(Enemy enemy)
