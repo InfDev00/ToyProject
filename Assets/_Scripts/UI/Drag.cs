@@ -21,6 +21,7 @@ namespace UI
         {
             mainCamera = Camera.main;
             lineRenderer = gameObject.GetComponent<LineRenderer>();
+            lineRenderer.positionCount = 0;
         }
 
         public void OnBeginDrag(PointerEventData eventData)

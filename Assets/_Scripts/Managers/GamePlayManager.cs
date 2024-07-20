@@ -66,7 +66,6 @@ namespace Managers
             player.BeInvincibility(false);
             foreach (var obj in hitSet)
             {
-                Debug.Log(obj.name);
                 obj?.EntityMove.KnockBack(player.transform.position, 5000);
             }
             Util.SetTimeScale(1f);

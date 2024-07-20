@@ -13,18 +13,9 @@ namespace Entities
         public float initialDef;
         public float initialVelocity;
         public float initialJumpPower;
-
-        private BoxCollider _collider;
-        private Rigidbody _rigidBody;
         
         public EntityMove EntityMove;
         public EntityStatus EntityStatus;
-
-        private void Awake()
-        {
-            _collider = GetComponent<BoxCollider>();
-            _rigidBody = GetComponent<Rigidbody>();
-        }
 
         protected virtual void OnCollisionEnter(Collision collision)
         {
@@ -45,12 +36,6 @@ namespace Entities
                         interactObjectHitHandler.OnHitInteractObject(comp as InteractObject);
                     break;
             }
-        }
-
-        public void BeInvincibility(bool invincible)
-        {
-            _collider.enabled = !invincible;
-            _rigidBody.useGravity = !invincible;
         }
         
         protected EntityMove CreateEntityMove() =>

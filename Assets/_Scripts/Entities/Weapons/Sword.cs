@@ -7,22 +7,25 @@ namespace Entities.Weapons
 {
     public class Sword : Weapon, IEnemyHitHandler
     {
-        private WeaponManager _manager;
         public VisualEffect visualEffect;
 
         private void Start()
         {
-            _manager = GetComponentInParent<WeaponManager>();
+            visualEffect.Stop();
             _colliders = GetComponentsInChildren<BoxCollider>();
+            
+            Debug.Log(visualEffect.gameObject.name);
             
             SetCollidersEnabled(false);
         }
 
         protected override void Use()
         {
-            _manager.AttackDirection();
             if (visualEffect)
             {
+                var rot = pointer.transform.rotation.eulerAngles.y;
+                visualEffect.transform.rotation = Quaternion.Euler(0, rot + 90, 0);
+                
                 visualEffect.Play();
                 StartCoroutine(DisableColliderAfterEffect());
             }

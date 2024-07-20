@@ -1,3 +1,4 @@
+using UI;
 using UnityEngine;
 using Utils;
 
@@ -19,6 +20,8 @@ namespace Entities
         
         public WeaponType weaponType;
         public BoxCollider[] _colliders;
+
+        public EnemyPointer pointer;
         
         protected virtual void Awake()
         {
@@ -34,7 +37,7 @@ namespace Entities
                 _attackDuration = 0;
             }
         }
-
+        
         protected abstract void Use();
         
         protected virtual void OnTriggerEnter(Collider other)
