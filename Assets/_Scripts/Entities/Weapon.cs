@@ -16,7 +16,6 @@ namespace Entities
         public float damage;
         public float attackCoolTime;
         private float _attackDuration;
-        public float attackSpeed;
         
         public WeaponType weaponType;
         public BoxCollider[] _colliders;

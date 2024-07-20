@@ -9,10 +9,11 @@ namespace UI
 {
     public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        public Action<Queue<Vector3>, HashSet<GameObject>> DragEndAction = null;
+        public PlayerController player;
+        public Action<Queue<Vector3>, List<Enemy>> DragEndAction = null;
         
         private Queue<Vector3> hitPositionsQueue = new Queue<Vector3>();
-        private HashSet<GameObject> hitPositionsSet = new HashSet<GameObject>();
+        private HashSet<Enemy> hitPositionsSet = new HashSet<Enemy>();
         private Camera mainCamera;
         private LineRenderer lineRenderer;
         
@@ -28,6 +29,11 @@ namespace UI
             hitPositionsQueue.Clear();
             hitPositionsSet.Clear();
             lineRenderer.positionCount = 0;
+            if (player != null)
+            {
+                hitPositionsQueue.Enqueue(player.transform.position);
+                UpdateLineRenderer(player.transform.position);
+            }
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -36,7 +42,7 @@ namespace UI
             
             if (Physics.Raycast(ray, out var hit) && hit.collider.CompareTag(Tags.ENEMY))
             {
-                if (hitPositionsSet.Add(hit.collider.gameObject))
+                if (hitPositionsSet.Add(hit.collider.GetComponent<Enemy>()))
                 {
                     hitPositionsQueue.Enqueue(hit.collider.transform.position);
                     UpdateLineRenderer(hit.collider.transform.position);
@@ -47,7 +53,7 @@ namespace UI
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            DragEndAction?.Invoke(hitPositionsQueue, hitPositionsSet);
+            DragEndAction?.Invoke(hitPositionsQueue, new List<Enemy>(hitPositionsSet));
             lineRenderer.positionCount = 0;
         }
         

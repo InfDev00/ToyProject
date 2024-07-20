@@ -1,3 +1,4 @@
+using System;
 using Entities.EntitySubClass;
 using UnityEngine;
 using Utils;
@@ -12,10 +13,19 @@ namespace Entities
         public float initialDef;
         public float initialVelocity;
         public float initialJumpPower;
+
+        private BoxCollider _collider;
+        private Rigidbody _rigidBody;
         
         public EntityMove EntityMove;
         public EntityStatus EntityStatus;
-        
+
+        private void Awake()
+        {
+            _collider = GetComponent<BoxCollider>();
+            _rigidBody = GetComponent<Rigidbody>();
+        }
+
         protected virtual void OnCollisionEnter(Collision collision)
         {
             // 각 Entity는 타인과 충돌 시 발생하는 코드 포함
@@ -35,6 +45,12 @@ namespace Entities
                         interactObjectHitHandler.OnHitInteractObject(comp as InteractObject);
                     break;
             }
+        }
+
+        public void BeInvincibility(bool invincible)
+        {
+            _collider.enabled = !invincible;
+            _rigidBody.useGravity = !invincible;
         }
         
         protected EntityMove CreateEntityMove() =>

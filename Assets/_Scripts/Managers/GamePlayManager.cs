@@ -36,7 +36,7 @@ namespace Managers
             ui.UpdateTimerDisplay(gamePlayTime);
         }
 
-        private void OnDragEnd(Queue<Vector3> hitPoints, HashSet<GameObject> hitSet)
+        private void OnDragEnd(Queue<Vector3> hitPoints, List<Enemy> hitSet)
         {
             if (followPathCoroutine != null)
             {
@@ -45,18 +45,17 @@ namespace Managers
             followPathCoroutine = StartCoroutine(FollowDragPath(hitPoints, hitSet));
         }
 
-        private IEnumerator FollowDragPath(Queue<Vector3> hitPoints, HashSet<GameObject> hitSet)
+        private IEnumerator FollowDragPath(Queue<Vector3> hitPoints, List<Enemy> hitSet)
         {
             isFollowingDragPath = true;
             player.EntityMove.UpdateVelocity(200);
-            player.GetComponent<BoxCollider>().isTrigger = true;
-            player.GetComponent<Rigidbody>().useGravity = false;
+            player.BeInvincibility(true);
             while (hitPoints.Count > 0)
             {
-                Vector3 targetPoint = hitPoints.Peek();
+                var targetPoint = hitPoints.Peek();
                 while (Vector3.Distance(player.transform.position, targetPoint) > 0.6f)
                 {
-                    Vector3 direction = (targetPoint - player.transform.position).normalized;
+                    var direction = (targetPoint - player.transform.position).normalized;
                     player.EntityMove.Move(direction);
                     yield return null;
                 }
@@ -64,11 +63,11 @@ namespace Managers
             }
 
             isFollowingDragPath = false;
-            player.GetComponent<BoxCollider>().isTrigger = false;
-            player.GetComponent<Rigidbody>().useGravity = true;
+            player.BeInvincibility(false);
             foreach (var obj in hitSet)
             {
-
+                Debug.Log(obj.name);
+                obj?.EntityMove.KnockBack(player.transform.position, 5000);
             }
             Util.SetTimeScale(1f);
             player.EntityMove.UpdateVelocity(10);

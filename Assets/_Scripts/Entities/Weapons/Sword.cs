@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using Managers;
 using UnityEngine;
 using UnityEngine.VFX;
-using Utils;
 
 namespace Entities.Weapons
 {
@@ -23,7 +21,7 @@ namespace Entities.Weapons
         protected override void Use()
         {
             _manager.AttackDirection();
-            if (visualEffect != null)
+            if (visualEffect)
             {
                 visualEffect.Play();
                 StartCoroutine(DisableColliderAfterEffect());

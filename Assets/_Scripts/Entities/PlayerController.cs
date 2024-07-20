@@ -7,7 +7,7 @@ namespace Entities
     public class PlayerController : Entity, IEnemyHitHandler, IInteractObjectHitHandler
     {
         private bool _isJump;
-        private void Awake()
+        private void Start()
         {
             EntityMove = CreateEntityMove();
             EntityStatus = new EntityStatus(initialHealth, initialDef);
