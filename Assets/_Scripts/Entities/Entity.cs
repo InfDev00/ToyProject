@@ -36,7 +36,7 @@ namespace Entities
                     break;
             }
         }
-
+        
         protected EntityMove CreateEntityMove() =>
             new(initialVelocity, initialJumpPower, GetComponent<Rigidbody>(), GetComponent<Transform>());
     }

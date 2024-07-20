@@ -5,6 +5,12 @@ namespace Entities
 {
     public abstract class Weapon : MonoBehaviour
     {
+        public enum WeaponType
+        {
+            RANGE_ATTACK,
+            MELEE_ATTACK,
+        }
+        
         [Header("Weapon Status")] 
         public int level = 1;
         public float damage;
@@ -13,12 +19,10 @@ namespace Entities
         public float attackSpeed;
         
         public WeaponType weaponType;
-        public GameObject weaponObject;
-        public Animator anim;
+        public BoxCollider[] _colliders;
         
         protected virtual void Awake()
         {
-            weaponObject.SetActive(false);
             _attackDuration = attackCoolTime - 0.5f;
         }
 
@@ -53,6 +57,11 @@ namespace Entities
                         interactObjectHitHandler.OnHitInteractObject(comp as InteractObject);
                     break;
             }
+        }
+        
+        protected void SetCollidersEnabled(bool isEnabled)
+        {
+            for (int i = 0; i < _colliders.Length; ++i) _colliders[i].enabled = isEnabled;
         }
     }
 }

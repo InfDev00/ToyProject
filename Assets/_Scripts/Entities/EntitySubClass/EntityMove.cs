@@ -4,9 +4,7 @@ namespace Entities.EntitySubClass
 {
     public class EntityMove
     {
-        public bool LockRotation;
-        
-        private readonly float _velocity;
+        private float _velocity;
         private readonly float _jumpPower;
         
         private readonly Rigidbody _rigidBody;
@@ -23,17 +21,22 @@ namespace Entities.EntitySubClass
             _transform = transform;
         }
 
+        public void UpdateVelocity(float velocity) => _velocity = velocity;
+
         public void MovePlayer(Vector2 force2d)
         {
             Move(new Vector2(force2d.x * cos - force2d.y * sin, force2d.x * sin + force2d.y * cos));
         }
 
-        public void Move(Vector3 force3d)
+        public void Move(Vector3 force3d, bool is2d = false)
         {
             var velocity = force3d.normalized * _velocity;
-            
-            _rigidBody.velocity = new Vector3(velocity.x, _rigidBody.velocity.y, velocity.z);
-            if(!LockRotation)Rotation(force3d);
+
+            _rigidBody.velocity =
+                is2d
+                    ? new Vector3(velocity.x, _rigidBody.velocity.y, velocity.z)
+                    : new Vector3(velocity.x, velocity.y, velocity.z);
+            Rotation(force3d);
         }
         
         public void Move(Vector2 force2d)
@@ -45,7 +48,7 @@ namespace Entities.EntitySubClass
             }
 
             var force3d = new Vector3(force2d.x, 0, force2d.y);
-            Move(force3d);
+            Move(force3d, true);
         }
 
         public void Jump() => _rigidBody.AddForce(0, _jumpPower * 10, 0);
@@ -54,6 +57,12 @@ namespace Entities.EntitySubClass
         {
             var target = Quaternion.LookRotation(force3d);
             _transform.rotation = Quaternion.Slerp(_transform.rotation, target, Time.deltaTime * 10);
+        }
+
+        public void KnockBack(Vector3 target, float power)
+        {
+            var dist = (_transform.position - target).normalized;
+            _rigidBody.AddForce(dist * power);
         }
     }
 }
