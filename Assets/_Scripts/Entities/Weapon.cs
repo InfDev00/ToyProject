@@ -1,3 +1,4 @@
+using UI;
 using UnityEngine;
 using Utils;
 
@@ -5,20 +6,25 @@ namespace Entities
 {
     public abstract class Weapon : MonoBehaviour
     {
+        public enum WeaponType
+        {
+            RANGE_ATTACK,
+            MELEE_ATTACK,
+        }
+        
         [Header("Weapon Status")] 
         public int level = 1;
         public float damage;
         public float attackCoolTime;
         private float _attackDuration;
-        public float attackSpeed;
         
         public WeaponType weaponType;
-        public GameObject weaponObject;
-        public Animator anim;
+        public BoxCollider[] _colliders;
 
-        private void Awake()
+        public EnemyPointer pointer;
+        
+        protected virtual void Awake()
         {
-            weaponObject.SetActive(false);
             _attackDuration = attackCoolTime - 0.5f;
         }
 
@@ -31,7 +37,7 @@ namespace Entities
                 _attackDuration = 0;
             }
         }
-
+        
         protected abstract void Use();
         
         protected virtual void OnTriggerEnter(Collider other)
@@ -53,6 +59,11 @@ namespace Entities
                         interactObjectHitHandler.OnHitInteractObject(comp as InteractObject);
                     break;
             }
+        }
+        
+        protected void SetCollidersEnabled(bool isEnabled)
+        {
+            for (int i = 0; i < _colliders.Length; ++i) _colliders[i].enabled = isEnabled;
         }
     }
 }

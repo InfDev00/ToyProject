@@ -1,4 +1,3 @@
-using System;
 using Entities.EntitySubClass;
 using UI;
 using UnityEngine;
@@ -9,11 +8,26 @@ namespace Entities
     public class PlayerController : Entity, IEnemyHitHandler, IInteractObjectHitHandler
     {
         private bool _isJump;
+        public int maxWeapons;
+        private Weapon[] _weapons;
+        private int _weaponIdx = 0;
+        
+        private BoxCollider _collider;
+        private Rigidbody _rigidBody;
+        
+        [Header("Child Object")]
+        public EnemyPointer pointer;
+        public GameObject weaponObj;
+        
         private void Awake()
         {
-            EntityMove = new EntityMove(initialVelocity, initialJumpPower, GetComponent<Rigidbody>());
+            EntityMove = CreateEntityMove();
             EntityStatus = new EntityStatus(initialHealth, initialDef);
             gameObject.tag = Tags.PLAYER;
+            
+            _collider = GetComponent<BoxCollider>();
+            _rigidBody = GetComponent<Rigidbody>();
+            _weapons = new Weapon[maxWeapons];
         }
 
         public void Jump()
@@ -25,6 +39,7 @@ namespace Entities
 
         public void OnHitEnemy(Enemy enemy)
         {
+            //enemy.EntityMove.KnockBack(transform.position, 4000);
             Debug.Log("Collision to Enemy");
         }
 
@@ -34,9 +49,25 @@ namespace Entities
             interact.Interact(gameObject);
         }
 
+        public void AddWeapon(GameObject weaponPrefab)
+        {
+            if (_weaponIdx < maxWeapons)
+            {
+                var weapon = Instantiate(weaponPrefab, weaponObj.transform).GetComponent<Weapon>();
+                weapon.pointer = pointer;
+                _weapons[_weaponIdx++] = weapon;
+            }
+        }
+        
+        public void BeInvincibility(bool invincible)
+        {
+            _collider.enabled = !invincible;
+            _rigidBody.useGravity = !invincible;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
-            if (other.name == "Terrain" || other.CompareTag(Tags.ENEMY)) _isJump = true;
+            if (other.CompareTag(Tags.GROUND) || other.CompareTag(Tags.ENEMY)) _isJump = true;
         }
     }
 }
