@@ -31,5 +31,10 @@ namespace Entities
             Debug.Log("Enemy Damaged");
             if(! EntityStatus.GetDamage(damage)) Destroy(gameObject); //test
         }
+
+        private void OnDestroy()
+        {
+            EnemyManager.OnEnemyKilled?.Invoke(this);
+        }
     }
 }

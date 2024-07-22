@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ce5bb9d6df0ef44b8b0ec80d9ec054, type: 3}
   m_Name: Stage3
   m_EditorClassIdentifier: 
-  _totalStageTime: 50
+  _totalStageTime: 30
   _intervalTime: 10
+  type: 1
+  currentStageEnemies:
+  - {fileID: 779650572252347049, guid: 482cac813971ffd4fafea621770d030b, type: 3}
+  totalEnemyCount: 3

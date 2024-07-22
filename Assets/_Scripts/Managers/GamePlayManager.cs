@@ -15,13 +15,26 @@ namespace Managers
         public PlayerController player;
         public GamePlayUI ui;
 
+        public StageManager stageManager;
+        public EnemyManager enemyManager;
+        
         private bool isFollowingDragPath = false;
         private Coroutine followPathCoroutine;
+
+        public void SetGamePlayTime(Stage stageInfo)
+        {
+            gamePlayTime = stageInfo.TotalStageTime;
+        }
+
 
         private void Start()
         {
             ui.UpdateTimerDisplay(gamePlayTime);
             ui.jumpButton.onClick.AddListener(player.Jump);
+
+            StageManager.OnStageChanged += SetGamePlayTime;
+            StageManager.OnStageChanged?.Invoke(stageManager.currentStage);
+
             ui.drag.DragEndAction += OnDragEnd;
         }
 
@@ -34,6 +47,14 @@ namespace Managers
 
             gamePlayTime -= Time.fixedDeltaTime;
             ui.UpdateTimerDisplay(gamePlayTime);
+            ui.UpdateStageDisplay(stageManager.currentStage, enemyManager.UpdateEnemyCount());
+
+            stageManager.UpdateStage(stageManager.currentStage.type, gamePlayTime, enemyManager.UpdateEnemyCount());
+        }
+
+        private void OnDestroy()
+        {
+            StageManager.OnStageChanged -= SetGamePlayTime;
         }
 
         private void OnDragEnd(Queue<Vector3> hitPoints, List<Enemy> hitSet) // 추후 다른 위치로 변경

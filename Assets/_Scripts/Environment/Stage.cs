@@ -1,8 +1,12 @@
+using Entities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum stageType { genocide, survive }
+
 [CreateAssetMenu(fileName = "Stage Data", menuName ="Stage Data")]
+
 public class Stage : ScriptableObject
 {
     // Informations of current Stage
@@ -14,7 +18,6 @@ public class Stage : ScriptableObject
         get 
         {
             return _totalStageTime;
-                
         }
     }
     [SerializeField] float _intervalTime; 
@@ -27,13 +30,14 @@ public class Stage : ScriptableObject
         }
     }
 
+    public stageType type;
 
     // Enemy Infos
     // Enemy List or Enemy Spawner
 
-    public Stage(float total, float interval)
-    {
-        _totalStageTime = total;
-        _intervalTime = interval;
-    }
+    public List<Enemy> currentStageEnemies = new List<Enemy>();
+
+    public int totalEnemyCount;
+
+    
 }

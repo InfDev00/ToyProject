@@ -25,6 +25,12 @@ namespace UI
         public Button resumeButton;
         public Button exitButton;
 
+        [Header("StageInfos")]
+        public TextMeshProUGUI stageTime;
+        public TextMeshProUGUI stageType;
+        public TextMeshProUGUI stageEnemies;
+        public TextMeshProUGUI enemyCount;
+
         private float _lastNonZeroVolume = 1f;
         private bool _isAdjusting;
         
@@ -47,6 +53,14 @@ namespace UI
             var seconds = Mathf.FloorToInt(time % 60);
 
             timerText.text = $"{minutes:00}:{seconds:00}";
+        }
+
+        public void UpdateStageDisplay(Stage stageInfo, int enemyCnt)
+        {
+            stageTime.text = $"Current Stage Time : {stageInfo.TotalStageTime}";
+            stageType.text = $"Current Stage Type : {stageInfo.type}";
+            stageEnemies.text = $"Current Stage Enemies : {stageInfo.currentStageEnemies}";
+            enemyCount.text = $"Current Stage Enemy Count : {enemyCnt}";
         }
 
         private void OnVolumeChanged(float volume)

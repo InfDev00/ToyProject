@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _totalStageTime: 30
   _intervalTime: 6
+  type: 0
+  currentStageEnemies:
+  - {fileID: 779650572252347049, guid: 482cac813971ffd4fafea621770d030b, type: 3}
+  - {fileID: 779650572252347049, guid: 8eaeb678521b12242aa25d1afe26029b, type: 3}
+  totalEnemyCount: 5
