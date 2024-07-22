@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
             int enemyRandInt = Random.Range(0, enemies.Count);
             int pointRandInt = Random.Range(0, spawnTargets.Count);
             Enemy _instantiatedEnemy = Instantiate(enemies[enemyRandInt], spawnTargets[pointRandInt].transform.position, Quaternion.identity);
-            _instantiatedEnemy.followTarget = _player;
+            _instantiatedEnemy.followTarget = _player.transform;
             _enemyManager.enemyList.Add(_instantiatedEnemy);
         }
         

@@ -24,8 +24,6 @@ public class StageManager : MonoBehaviour
     // Current Stage
     public Stage currentStage;
 
-    bool _isStageProcess;
-
 
     // Set Current Stage to next Stage
     public void SetStage()
@@ -43,7 +41,6 @@ public class StageManager : MonoBehaviour
     public void SetTime()
     {
         elapsedTime = 0;
-        _isStageProcess = true;
     }
 
     public void EndStage()
@@ -97,7 +94,7 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    // ÀÌ°Å ¸»°í ´õ ÁÁÀº ¹æ½ÄÀÌ ¾øÀ¸·Á³ª? ¤µ¤²
+    // ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½? ï¿½ï¿½ï¿½ï¿½
     //void Update()
     //{
     //    if (!_isStageProcess) return;
