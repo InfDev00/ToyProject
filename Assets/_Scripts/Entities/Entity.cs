@@ -1,3 +1,4 @@
+using System;
 using Entities.EntitySubClass;
 using UnityEngine;
 using Utils;
@@ -15,7 +16,7 @@ namespace Entities
         
         public EntityMove EntityMove;
         public EntityStatus EntityStatus;
-        
+
         protected virtual void OnCollisionEnter(Collision collision)
         {
             // 각 Entity는 타인과 충돌 시 발생하는 코드 포함
@@ -36,5 +37,8 @@ namespace Entities
                     break;
             }
         }
+        
+        protected EntityMove CreateEntityMove() =>
+            new(initialVelocity, initialJumpPower, GetComponent<Rigidbody>(), GetComponent<Transform>());
     }
 }

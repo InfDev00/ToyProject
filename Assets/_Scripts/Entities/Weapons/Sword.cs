@@ -1,29 +1,47 @@
 using System.Collections;
+using Managers;
 using UnityEngine;
-using Utils;
+using UnityEngine.VFX;
 
 namespace Entities.Weapons
 {
     public class Sword : Weapon, IEnemyHitHandler
     {
-        protected override void Use()
+        public VisualEffect visualEffect;
+
+        private void Start()
         {
-            StopCoroutine(Swing());
-            StartCoroutine(Swing());
+            visualEffect.Stop();
+            _colliders = GetComponentsInChildren<BoxCollider>();
+            
+            Debug.Log(visualEffect.gameObject.name);
+            
+            SetCollidersEnabled(false);
         }
 
-        private IEnumerator Swing()
+        protected override void Use()
         {
-            weaponObject.SetActive(true);
-            anim.SetFloat(Values.ANIM_ATTACK_SPEED, 1/attackSpeed);
-            anim.SetTrigger(Values.ANIM_ATTACK);
-            yield return new WaitForSeconds(attackSpeed);
-            weaponObject.SetActive(false);
+            if (visualEffect)
+            {
+                var rot = pointer.transform.rotation.eulerAngles.y;
+                visualEffect.transform.rotation = Quaternion.Euler(0, rot + 90, 0);
+                
+                visualEffect.Play();
+                StartCoroutine(DisableColliderAfterEffect());
+            }
+            SetCollidersEnabled(true);
+        }
+
+        private IEnumerator DisableColliderAfterEffect()
+        {
+            yield return new WaitUntil(() => visualEffect.aliveParticleCount==0);
+            
+            SetCollidersEnabled(false);
         }
 
         public void OnHitEnemy(Enemy enemy)
         {
-            if(enemy is IDamageable damageable) damageable.Damaged(1);
+            if(enemy is IDamageable damageable) damageable.Damaged(damage);
         }
     }
 }

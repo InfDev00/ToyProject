@@ -35,10 +35,6 @@ public class JoyStick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
         
         public void OnPointerDown(PointerEventData eventData)
         {
-
-            RectTransformUtility.ScreenPointToWorldPointInRectangle(background, eventData.position, eventData.pressEventCamera, out var worldPoint);
-            background.position = worldPoint;
-            
             OnDrag(eventData);
         }
 
