@@ -36,7 +36,7 @@ namespace Managers
             ui.UpdateTimerDisplay(gamePlayTime);
         }
 
-        private void OnDragEnd(Queue<Vector3> hitPoints, List<Enemy> hitSet)
+        private void OnDragEnd(Queue<Vector3> hitPoints, List<Enemy> hitSet) // 추후 다른 위치로 변경
         {
             if (followPathCoroutine != null)
             {
@@ -53,20 +53,21 @@ namespace Managers
             while (hitPoints.Count > 0)
             {
                 var targetPoint = hitPoints.Peek();
-                while (Vector3.Distance(player.transform.position, targetPoint) > 0.6f)
+                while (Vector3.Distance(player.transform.position, targetPoint) > 1f)
                 {
                     var direction = (targetPoint - player.transform.position).normalized;
                     player.EntityMove.Move(direction);
                     yield return null;
                 }
+                player.EntityMove.Stop();
                 hitPoints.Dequeue();
             }
 
             isFollowingDragPath = false;
             player.BeInvincibility(false);
-            foreach (var obj in hitSet)
+            foreach (var enemy in hitSet)
             {
-                obj?.EntityMove.KnockBack(player.transform.position, 5000);
+                enemy.EntityMove.KnockBack(player.transform.position, 5000);
             }
             Util.SetTimeScale(1f);
             player.EntityMove.UpdateVelocity(10);

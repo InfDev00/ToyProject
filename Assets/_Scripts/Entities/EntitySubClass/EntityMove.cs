@@ -64,5 +64,7 @@ namespace Entities.EntitySubClass
             var dist = (_transform.position - target).normalized;
             _rigidBody.AddForce(dist * power);
         }
+
+        public void Stop() => _rigidBody.velocity = Vector3.zero;
     }
 }

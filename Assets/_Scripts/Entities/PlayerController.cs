@@ -51,11 +51,9 @@ namespace Entities
 
         public void AddWeapon(GameObject weaponPrefab)
         {
-            var weapon = weaponPrefab.GetComponent<Weapon>();
-            
             if (_weaponIdx < maxWeapons)
             {
-                Instantiate(weaponPrefab, weaponObj.transform);
+                var weapon = Instantiate(weaponPrefab, weaponObj.transform).GetComponent<Weapon>();
                 weapon.pointer = pointer;
                 _weapons[_weaponIdx++] = weapon;
             }
