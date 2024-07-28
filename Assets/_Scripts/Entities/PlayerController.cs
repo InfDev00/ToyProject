@@ -1,3 +1,4 @@
+using System;
 using Entities.EntitySubClass;
 using UI;
 using UnityEngine;
@@ -49,12 +50,16 @@ namespace Entities
             interact.Interact(gameObject);
         }
 
+        private void FixedUpdate()
+        {
+            for (var i = 0; i < _weaponIdx; ++i) _weapons[i].attackRotation = pointer.transform.rotation;
+        }
+
         public void AddWeapon(GameObject weaponPrefab)
         {
             if (_weaponIdx < maxWeapons)
             {
                 var weapon = Instantiate(weaponPrefab, weaponObj.transform).GetComponent<Weapon>();
-                weapon.pointer = pointer;
                 _weapons[_weaponIdx++] = weapon;
             }
         }

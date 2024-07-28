@@ -11,6 +11,11 @@ namespace Utils
         public const string GROUND = "Ground";
     }
 
+    public static class Layers
+    {
+        public const int ENEMY = 6;
+    }
+    
     public static class Values
     {
         public const string ANIM_ATTACK = "Attack";

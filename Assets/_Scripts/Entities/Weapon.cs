@@ -1,5 +1,6 @@
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace Entities
@@ -19,9 +20,12 @@ namespace Entities
         private float _attackDuration;
         
         public WeaponType weaponType;
-        public BoxCollider[] _colliders;
+        public Quaternion attackRotation;
 
-        public EnemyPointer pointer;
+        public bool stopAttack;
+        
+        [Header("Melee Attack")]
+        public BoxCollider[] _colliders;
         
         protected virtual void Awake()
         {
@@ -31,7 +35,7 @@ namespace Entities
         private void FixedUpdate()
         {
             _attackDuration += Time.fixedDeltaTime;
-            if (_attackDuration >= attackCoolTime)
+            if (_attackDuration >= attackCoolTime && !stopAttack)
             {
                 Use();
                 _attackDuration = 0;

@@ -23,7 +23,7 @@ namespace Entities.Weapons
         {
             if (visualEffect)
             {
-                var rot = pointer.transform.rotation.eulerAngles.y;
+                var rot = attackRotation.eulerAngles.y;
                 visualEffect.transform.rotation = Quaternion.Euler(0, rot + 90, 0);
                 
                 visualEffect.Play();

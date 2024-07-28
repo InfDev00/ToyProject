@@ -14,9 +14,15 @@ namespace Entities
             EntityMove = CreateEntityMove();
             EntityStatus = new EntityStatus(initialHealth, initialDef);
             gameObject.tag = Tags.ENEMY;
+            gameObject.layer = Layers.ENEMY;
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
+        {
+            Follow();
+        }
+
+        private void Follow()
         {
             if (followTarget && Vector3.Distance(followTarget.position, transform.position) > 2f)
             {
@@ -25,7 +31,7 @@ namespace Entities
                 EntityMove.Move(direction2D);
             }
         }
-
+        
         public void Damaged(float damage)
         {
             Debug.Log("Enemy Damaged");
